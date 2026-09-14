@@ -13,6 +13,7 @@ const importOAuthModule = (specifier: string): Promise<unknown> => {
 
 type OAuthFlowLoaders = {
 	anthropic: () => OAuthAuth | Promise<OAuthAuth>;
+	antigravity: () => OAuthAuth | Promise<OAuthAuth>;
 	openaiCodex: () => OAuthAuth | Promise<OAuthAuth>;
 	githubCopilot: () => OAuthAuth | Promise<OAuthAuth>;
 	openrouter: () => OAuthAuth | Promise<OAuthAuth>;
@@ -31,6 +32,11 @@ export function registerBundledOAuthFlowLoaders(loaders: OAuthFlowLoaders): void
 export const loadAnthropicOAuth = async (): Promise<OAuthAuth> => {
 	if (bundledLoaders) return bundledLoaders.anthropic();
 	return ((await importOAuthModule("./anthropic.ts")) as { anthropicOAuth: OAuthAuth }).anthropicOAuth;
+};
+
+export const loadAntigravityOAuth = async (): Promise<OAuthAuth> => {
+	if (bundledLoaders) return bundledLoaders.antigravity();
+	return ((await importOAuthModule("./antigravity.ts")) as { antigravityOAuth: OAuthAuth }).antigravityOAuth;
 };
 
 export const loadOpenAICodexOAuth = async (): Promise<OAuthAuth> => {
